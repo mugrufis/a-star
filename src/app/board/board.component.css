@@ -1,0 +1,14 @@
+.square {
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+}
+
+.isWall {
+  background-color: black;
+}
+
+.isRow {
+  display: flex;
+  flex-direction: row;
+}

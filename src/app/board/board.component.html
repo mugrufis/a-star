@@ -1,0 +1,8 @@
+<div *ngFor="let row of board.getBoardIn2D()"
+     class="isRow">
+  <div *ngFor="let node of row"
+       [ngClass]="{'isWall': node.isWall, 'square': true}"
+  >
+
+  </div>
+</div>

@@ -1,17 +1,25 @@
 import {Edge} from './Edge';
-import {AppComponent} from '../app.component';
 
 export class Node {
-  public readonly isWall: boolean;
+  private static readonly PROBABILITY_TO_BE_WALL = 0.3;
+  public isWall: boolean;
+  public edges: Edge[] = [];
 
   constructor(
     public readonly id: number,
-    public edges?: Edge[]
   ) {
-    if (Math.random() > AppComponent.PROBABILITY_TO_BE_WALL) {
+    if (Math.random() > Node.PROBABILITY_TO_BE_WALL) {
       this.isWall = false;
     } else {
       this.isWall = true;
     }
+  }
+
+  public addEdge(newEdge: Edge): void {
+    this.edges.push(newEdge);
+  }
+
+  public turnToWall(): void {
+    this.isWall = true;
   }
 }
