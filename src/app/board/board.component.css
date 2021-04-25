@@ -12,3 +12,11 @@
   display: flex;
   flex-direction: row;
 }
+
+.isStart {
+  background-color: green;
+}
+
+.isGoal {
+  background-color: gold;
+}

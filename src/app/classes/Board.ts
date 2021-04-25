@@ -1,30 +1,41 @@
 import { Edge } from './Edge';
-import { Node } from './Node';
 import { chunk, isEmpty } from 'lodash-es';
+import {BoardNode} from './BoardNode';
+import {SearchEndpointIds} from '../app.component';
 
 export class Board {
-  private board: Node[];
+  private board: BoardNode[];
   public edges: Edge[];
 
   constructor(
-    public boardSize: number
+    public boardSize: number,
+    private endpointIds: SearchEndpointIds
   ) {
     const boardArea = boardSize * boardSize;
-    this.board = this.getInitialBoardNodes(boardArea);
+    this.board = this.getInitialBoardNodes(boardArea, endpointIds);
     this.edges = this.generateAvailableEdges(this.board);
 
-    this.removeUnconnectedNodes();
   }
 
-  private getInitialBoardNodes(boardArea: number): Node[] {
+  private getInitialBoardNodes(boardArea: number, endpointIds: SearchEndpointIds): BoardNode[] {
     const board = [];
     for (let i = 0; i < boardArea; i++) {
-      board.push(new Node(i));
+      const boardNode = new BoardNode(i);
+
+      if (i === endpointIds.startNode){
+        boardNode.isStartNode = true;
+      }
+
+      if (endpointIds.endNodes.indexOf(i) > -1){
+        boardNode.isGoalNode = true;
+      }
+
+      board.push(boardNode);
     }
     return board;
   }
 
-  private generateAvailableEdges(nodes: Node[]): Edge[] {
+  private generateAvailableEdges(nodes: BoardNode[]): Edge[] {
     const edges: Edge[] = [];
     const board2D = this.getBoardIn2D();
     for (let i = 0; i < this.boardSize; i++) {
@@ -49,19 +60,11 @@ export class Board {
     return edges;
   }
 
-  private removeUnconnectedNodes(): void {
-    this.board.forEach((node) => {
-      if (isEmpty(node.edges)) {
-        node.turnToWall()
-      }
-    })
-  }
-
-  public getBoardIn1D(): Node[] {
+  public getBoardIn1D(): BoardNode[] {
     return this.board;
   }
 
-  public getBoardIn2D(): Node[][] {
+  public getBoardIn2D(): BoardNode[][] {
     return chunk(this.board, this.boardSize);
   }
 }
