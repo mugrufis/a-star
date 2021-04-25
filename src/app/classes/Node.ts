@@ -4,7 +4,7 @@ export class Node {
   public edges: Edge[] = [];
 
   constructor(
-    public readonly id: number,
+    public readonly id: number, // <- oi ""sintetagmenes""
   ) {
   }
 
