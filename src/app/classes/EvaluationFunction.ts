@@ -3,10 +3,12 @@ import {BoardNode, Costs} from './BoardNode';
 export class EvaluationFunction {
   public static evaluate(expandedNode: BoardNode, newFrontierNode: BoardNode, goalNode: BoardNode, boardSize: number): Costs {
     return {
-      heuristicCost: HeuristicFunctions.heuristicOne(expandedNode, goalNode),
+      heuristicCost: HeuristicFunctions.heuristicOne(expandedNode, goalNode, boardSize),
       moveCost: CostFunction.run(expandedNode, newFrontierNode, boardSize),
-      totalCost: CostFunction.run(expandedNode, newFrontierNode, boardSize) + HeuristicFunctions.heuristicOne(expandedNode, goalNode),
-      // todo make that nice
+      totalCost:
+        CostFunction.run(expandedNode, newFrontierNode, boardSize) +
+        HeuristicFunctions.heuristicOne(expandedNode, goalNode, boardSize),
+      // todo make that nice. Maybe only total is needed in the end..
     };
   }
 }
@@ -32,7 +34,7 @@ export class CostFunction {
 }
 
 export class HeuristicFunctions {
-  public static heuristicOne(node: BoardNode, goalNode: BoardNode): number {
+  public static heuristicOne(node: BoardNode, goalNode: BoardNode, boardSize: number): number {
     return 0;
   }
 }

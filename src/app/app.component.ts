@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Board} from './classes/Board';
+import {AStar} from './classes/AStar';
 
 export type SearchEndpointIds = {startNode: number, endNodes: number[]};
 
@@ -18,9 +19,12 @@ export class AppComponent implements OnInit{
 
   public board = new Board(this.boardSize, this.searchEndpointIds);
 
-  ngOnInit(): void {
 
+  ngOnInit(): void {
+      const goalBoardNode = AStar.run(this.board);
   }
+
+
 }
 
 

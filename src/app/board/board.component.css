@@ -13,10 +13,18 @@
   flex-direction: row;
 }
 
+.isFrontier {
+  background-color: lightslategray;
+}
+
 .isStart {
   background-color: green;
 }
 
 .isGoal {
   background-color: gold;
+}
+
+.isPartOfWinningPath {
+  background-color: palegoldenrod;
 }

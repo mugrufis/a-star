@@ -1,7 +1,9 @@
 <div *ngFor="let row of board.getBoardIn2D()"
      class="isRow">
   <div *ngFor="let node of row"
-       [ngClass]="{'isWall': node.isWall, 'square': true, 'isStart': node.isStartNode, 'isGoal': node.isGoalNode}"
+       class="square"
+       [ngClass]="{'isWall': node.isWall,
+       'isFrontier': node.isInFrontier, 'isStart': node.isStartNode, 'isGoal': node.isGoalNode, 'isPartOfWinningPath': node.isPartOfWinningPath}"
   >
 
   </div>

@@ -1,20 +1,24 @@
 import { Edge } from './Edge';
-import { chunk, isEmpty } from 'lodash-es';
+import { chunk } from 'lodash-es';
 import {BoardNode} from './BoardNode';
 import {SearchEndpointIds} from '../app.component';
 
 export class Board {
-  private board: BoardNode[];
+  private boardNodes: BoardNode[];
   public edges: Edge[];
+  public readonly startNode: BoardNode;
+  public readonly endNodes: BoardNode[];
 
   constructor(
     public boardSize: number,
     private endpointIds: SearchEndpointIds
   ) {
     const boardArea = boardSize * boardSize;
-    this.board = this.getInitialBoardNodes(boardArea, endpointIds);
-    this.edges = this.generateAvailableEdges(this.board);
-
+    this.boardNodes = this.getInitialBoardNodes(boardArea, endpointIds);
+    this.startNode = this.boardNodes[endpointIds.startNode];
+    this.endNodes = this.boardNodes.filter((node) => endpointIds.endNodes.indexOf(node.id) !== -1);
+    this.edges = this.generateAvailableEdges(this.getBoardIn2D());
+    this.attachToNodesTheirNeighbors(this.edges);
   }
 
   private getInitialBoardNodes(boardArea: number, endpointIds: SearchEndpointIds): BoardNode[] {
@@ -35,9 +39,8 @@ export class Board {
     return board;
   }
 
-  private generateAvailableEdges(nodes: BoardNode[]): Edge[] {
+  private generateAvailableEdges(board2D: BoardNode[][]): Edge[] {
     const edges: Edge[] = [];
-    const board2D = this.getBoardIn2D();
     for (let i = 0; i < this.boardSize; i++) {
       // push horizontal edge
       const row = board2D[i];
@@ -47,8 +50,6 @@ export class Board {
           const otherEnd = iteratedRow[index + 1];
           const newEdge = new Edge([oneEnd, otherEnd]);
           edges.push(newEdge);
-          oneEnd.addEdge(newEdge);
-          otherEnd.addEdge(newEdge);
         }
       });
 
@@ -61,10 +62,23 @@ export class Board {
   }
 
   public getBoardIn1D(): BoardNode[] {
-    return this.board;
+    return this.boardNodes;
   }
 
   public getBoardIn2D(): BoardNode[][] {
-    return chunk(this.board, this.boardSize);
+    return chunk(this.boardNodes, this.boardSize);
+  }
+
+  public getBoardNodeById(id: number): BoardNode {
+    return this.boardNodes[id];
+  }
+
+  private attachToNodesTheirNeighbors(edges: Edge[]): void {
+    edges.forEach((edge) => {
+      const oneEnd = edge.ends[0];
+      const otherEnd = edge.ends[0];
+      oneEnd.addConnectedNode(otherEnd);
+      otherEnd.addConnectedNode(oneEnd);
+    });
   }
 }
