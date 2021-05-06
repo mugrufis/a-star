@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Board} from '../classes/Board';
+import { Component, Input, OnInit } from '@angular/core';
+import { Board } from '../classes/Board';
 
 @Component({
   selector: 'app-board',
@@ -14,5 +14,4 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

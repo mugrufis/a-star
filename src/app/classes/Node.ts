@@ -1,6 +1,6 @@
 export class Node {
   constructor(
-    public readonly id: number, // <- oi ""sintetagmenes""
+    public readonly id: number // <- oi ""sintetagmenes""
   ) {
   }
 }

@@ -1,8 +1,7 @@
-import {sortBy} from 'lodash-es';
-import {BoardNode} from './BoardNode';
+import { sortBy } from 'lodash-es';
+import { BoardNode } from './BoardNode';
 
 export class PriorityQueue {
-
   private store: BoardNode[] = [];
 
   public push(boardNode: BoardNode): void {

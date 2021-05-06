@@ -1,7 +1,7 @@
 import { Edge } from './Edge';
 import { chunk } from 'lodash-es';
-import {BoardNode} from './BoardNode';
-import {SearchEndpointIds} from '../app.component';
+import { BoardNode } from './BoardNode';
+import { SearchEndpointIds } from '../app.component';
 
 export class Board {
   private boardNodes: BoardNode[];
@@ -26,11 +26,11 @@ export class Board {
     for (let i = 0; i < boardArea; i++) {
       const boardNode = new BoardNode(i);
 
-      if (i === endpointIds.startNode){
+      if (i === endpointIds.startNode) {
         boardNode.isStartNode = true;
       }
 
-      if (endpointIds.endNodes.indexOf(i) > -1){
+      if (endpointIds.endNodes.indexOf(i) > -1) {
         boardNode.isGoalNode = true;
       }
 
