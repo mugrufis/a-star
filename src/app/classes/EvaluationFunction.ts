@@ -2,14 +2,18 @@ import { BoardNode } from './BoardNode';
 import { Cost } from './Cost';
 
 export class EvaluationFunction {
-  public static evaluateAndAttachCosts(expandedNode: BoardNode, newFrontierNode: BoardNode, goalNodes: BoardNode[], boardSize: number): void {
+  public static evaluateCosts(expandedNode: BoardNode, newFrontierNode: BoardNode, goalNodes: BoardNode[], boardSize: number): Map<BoardNode, Cost> {
+    let result: Map<BoardNode, Cost> = new Map();
+
     goalNodes.forEach(goalNode =>
-      newFrontierNode.costsMap.set(goalNode, new Cost(
+      result.set(goalNode, new Cost(
         CostFunction.run(expandedNode, newFrontierNode, boardSize, goalNodes),
         HeuristicFunctions.heuristicOne(expandedNode, goalNode, boardSize)
-      )
+        )
       )
     );
+
+    return result;
   }
 }
 

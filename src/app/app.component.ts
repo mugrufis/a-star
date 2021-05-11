@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Board } from './classes/Board';
 import { AStar } from './classes/AStar';
+import {BoardNode} from './classes/BoardNode';
 
 export type SearchEndpointIds = {startNode: number, endNodes: number[]};
 
@@ -21,5 +22,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     const goalBoardNode = AStar.run(this.board);
+
+    let node = goalBoardNode;
+    while (node?.getClosestNodeToGetHere()) {
+      node =node as BoardNode;
+      node.isPartOfWinningPath = true;
+      node = node.getClosestNodeToGetHere();
+    }
   }
 }

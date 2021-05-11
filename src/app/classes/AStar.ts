@@ -5,31 +5,43 @@ import { EvaluationFunction } from './EvaluationFunction';
 
 export class AStar {
   public static run(board: Board): BoardNode | undefined {
-    let node: BoardNode | undefined = board.startNode;
+    let coutRepetitions = 0;
+    let expandingNode: BoardNode | undefined = board.startNode;
+
     const frontier = new PriorityQueue();
-    frontier.push(node);
+    frontier.push(expandingNode);
 
     // TODO possibly reached must change to acomodate the 2 goals rule;
     const reached: {[n: number]: BoardNode} = {
-      [node.id]: node
+      [expandingNode.id]: expandingNode
     };
 
     while (!frontier.isEmpty()) {
-      node = frontier.pop() as BoardNode;
+      coutRepetitions++;
+      expandingNode = frontier.pop() as BoardNode;
 
-      if (node.isGoalNode) {
-        return node;
+      if (expandingNode.isGoalNode) {
+        console.log(coutRepetitions);
+        return expandingNode;
       }
 
-      node.connectedToNodes.forEach((connectedNode) => {
-        EvaluationFunction.evaluateAndAttachCosts(node as BoardNode, connectedNode, board.endNodes, board.boardSize);
+      expandingNode.connectedToNodes.forEach((connectedNode) => {
+        const newCosts = EvaluationFunction.evaluateCosts(expandingNode as BoardNode, connectedNode, board.endNodes, board.boardSize);
 
-        if (!reached[connectedNode.id] || reached[connectedNode.id].costs.totalCost > connectedNode.costs.totalCost) {
-          connectedNode.setClosestNeighbor(node);
+        // TODO change with a smarter implementation
+        const tempBoardNode =  new BoardNode(-1);
+        tempBoardNode.costsMap = newCosts;
+        const newCostsMinimum = tempBoardNode.getLowestTotalCost();
+
+        if (!reached[connectedNode.id] || reached[connectedNode.id].getLowestTotalCost() > newCostsMinimum) {
+          connectedNode.setClosestNodeToGetHere(expandingNode);
           reached[connectedNode.id] = connectedNode;
+
           frontier.push(connectedNode);
         }
       });
     }
+    console.log(coutRepetitions);
+    return expandingNode;
   }
 }

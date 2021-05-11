@@ -5,6 +5,6 @@
        [ngClass]="{'isWall': node.isWall,
        'isFrontier': node.isInFrontier, 'isStart': node.isStartNode, 'isGoal': node.isGoalNode, 'isPartOfWinningPath': node.isPartOfWinningPath}"
   >
-
+    {{node.getLowestTotalCost()}}
   </div>
 </div>

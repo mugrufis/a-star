@@ -1,8 +1,8 @@
-import { Node } from './Node';
+import {BoardNode} from './BoardNode';
 
 export class Edge {
   constructor(
-    public ends: [Node, Node]
+    public ends: [BoardNode, BoardNode]
   ) {
   }
 }

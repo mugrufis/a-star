@@ -4,7 +4,7 @@ import { BoardNode } from './BoardNode';
 import { SearchEndpointIds } from '../app.component';
 
 export class Board {
-  private boardNodes: BoardNode[];
+  private readonly boardNodes: BoardNode[];
   public edges: Edge[];
   public readonly startNode: BoardNode;
   public readonly endNodes: BoardNode[];
@@ -76,7 +76,7 @@ export class Board {
   private attachToNodesTheirNeighbors(edges: Edge[]): void {
     edges.forEach((edge) => {
       const oneEnd = edge.ends[0];
-      const otherEnd = edge.ends[0];
+      const otherEnd = edge.ends[1];
       oneEnd.addConnectedNode(otherEnd);
       otherEnd.addConnectedNode(oneEnd);
     });

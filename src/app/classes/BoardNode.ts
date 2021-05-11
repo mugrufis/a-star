@@ -2,7 +2,7 @@ import { Node } from './Node';
 import { Cost } from './Cost';
 
 export class BoardNode extends Node {
-  private static readonly PROBABILITY_TO_BE_WALL = 0.3;
+  private static readonly PROBABILITY_TO_BE_WALL = 0;
   public isWall = false;
   public isStartNode = false;
   public isGoalNode = false;
@@ -10,9 +10,10 @@ export class BoardNode extends Node {
   public isPartOfWinningPath = false;
   public connectedToNodes: BoardNode[] = [];
 
+  //  Connects cost associated with each GOAL node
   public costsMap: Map<BoardNode, Cost> = new Map<BoardNode, Cost>();
 
-  private closestNeighbor: BoardNode | undefined;
+  private closestNodeToGetHere: BoardNode | undefined;
 
   constructor(id: number) {
     super(id);
@@ -22,15 +23,25 @@ export class BoardNode extends Node {
     }
   }
 
-  public getClosestNeighbor(): BoardNode | undefined {
-    return this.closestNeighbor;
+  public getClosestNodeToGetHere(): BoardNode | undefined {
+    return this.closestNodeToGetHere;
   }
 
-  public setClosestNeighbor(value: BoardNode | undefined): void {
-    this.closestNeighbor = value;
+  public setClosestNodeToGetHere(value: BoardNode | undefined): void {
+    this.closestNodeToGetHere = value;
   }
 
   public addConnectedNode(newNode: BoardNode): void {
     this.connectedToNodes.push(newNode);
   }
+
+  // TODO change with a smarter implementation
+  public getLowestTotalCost(): number {
+    let result = Math.min(...Array.from(this.costsMap.values()).map(val => val.totalCost));
+    if (result === Infinity){
+      return 0;
+    }
+    return result;
+  }
+
 }
