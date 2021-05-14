@@ -11,10 +11,13 @@ export class PriorityQueue {
   }
 
   public pop(): BoardNode | undefined {
-    const boardNode = this.store.shift();
+    console.log(this.store);
 
+    console.log(this.store.map(val => val.id));
+    const boardNode = this.store.shift();
     if (boardNode) {
       boardNode.isInFrontier = false;
+      boardNode.isExpanded = true;
     }
 
     return boardNode;

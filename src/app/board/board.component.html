@@ -2,8 +2,14 @@
      class="isRow">
   <div *ngFor="let node of row"
        class="square"
-       [ngClass]="{'isWall': node.isWall,
-       'isFrontier': node.isInFrontier, 'isStart': node.isStartNode, 'isGoal': node.isGoalNode, 'isPartOfWinningPath': node.isPartOfWinningPath}"
+       [ngClass]="{
+       'isWall': node.isWall,
+       'isFrontier': node.isInFrontier,
+       'isStart': node.isStartNode,
+       'isGoal': node.isGoalNode,
+       'isPartOfWinningPath': node.isPartOfWinningPath,
+       'isExpanded': node.isExpanded
+       }"
   >
     {{node.getLowestTotalCost()}}
   </div>

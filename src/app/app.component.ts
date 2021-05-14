@@ -11,14 +11,15 @@ export type SearchEndpointIds = {startNode: number, endNodes: number[]};
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  private boardSize = 50;
+  private boardSize = 20;
+  private probabilityToBeWall = 0.3;
 
   private searchEndpointIds: SearchEndpointIds = {
     startNode: 0,
-    endNodes: [290, 1427]
+    endNodes: [Math.floor(Math.random() * (this.boardSize * this.boardSize))  ]
   };
 
-  public board = new Board(this.boardSize, this.searchEndpointIds);
+  public board = new Board(this.boardSize, this.searchEndpointIds, this.probabilityToBeWall);
 
   ngOnInit(): void {
     const goalBoardNode = AStar.run(this.board);

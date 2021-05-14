@@ -2,11 +2,11 @@ import { Node } from './Node';
 import { Cost } from './Cost';
 
 export class BoardNode extends Node {
-  private static readonly PROBABILITY_TO_BE_WALL = 0;
   public isWall = false;
   public isStartNode = false;
   public isGoalNode = false;
   public isInFrontier = false;
+  public isExpanded = false;
   public isPartOfWinningPath = false;
   public connectedToNodes: BoardNode[] = [];
 
@@ -15,10 +15,11 @@ export class BoardNode extends Node {
 
   private closestNodeToGetHere: BoardNode | undefined;
 
-  constructor(id: number) {
+  constructor(id: number, probabilityToBeWall: number) {
     super(id);
 
-    if (Math.random() <= BoardNode.PROBABILITY_TO_BE_WALL) {
+
+    if (Math.random() <= probabilityToBeWall) {
       this.isWall = true;
     }
   }

@@ -17,14 +17,18 @@
   background-color: lightslategray;
 }
 
+.isExpanded {
+  background-color: darkblue;
+}
+
 .isStart {
   background-color: green;
 }
 
-.isGoal {
-  background-color: gold;
-}
-
 .isPartOfWinningPath {
   background-color: palegoldenrod;
+}
+
+.isGoal {
+  background-color: gold;
 }

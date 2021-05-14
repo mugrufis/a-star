@@ -11,7 +11,6 @@ export class AStar {
     const frontier = new PriorityQueue();
     frontier.push(expandingNode);
 
-    // TODO possibly reached must change to acomodate the 2 goals rule;
     const reached: {[n: number]: BoardNode} = {
       [expandingNode.id]: expandingNode
     };
@@ -21,7 +20,7 @@ export class AStar {
       expandingNode = frontier.pop() as BoardNode;
 
       if (expandingNode.isGoalNode) {
-        console.log(coutRepetitions);
+        console.log("Goal Reached in " + coutRepetitions + " moves.");
         return expandingNode;
       }
 
@@ -29,19 +28,22 @@ export class AStar {
         const newCosts = EvaluationFunction.evaluateCosts(expandingNode as BoardNode, connectedNode, board.endNodes, board.boardSize);
 
         // TODO change with a smarter implementation
-        const tempBoardNode =  new BoardNode(-1);
+        const tempBoardNode =  new BoardNode(-1, 0);
         tempBoardNode.costsMap = newCosts;
         const newCostsMinimum = tempBoardNode.getLowestTotalCost();
 
+        if (!reached[connectedNode.id]) {
+          frontier.push(connectedNode);
+        }
+
         if (!reached[connectedNode.id] || reached[connectedNode.id].getLowestTotalCost() > newCostsMinimum) {
           connectedNode.setClosestNodeToGetHere(expandingNode);
+          connectedNode.costsMap = newCosts;
           reached[connectedNode.id] = connectedNode;
-
-          frontier.push(connectedNode);
         }
       });
     }
-    console.log(coutRepetitions);
-    return expandingNode;
+    console.log("Should this ever run? ", coutRepetitions);
+    return ;
   }
 }
